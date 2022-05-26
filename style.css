@@ -1,0 +1,54 @@
+.outer-container {
+    width: 100%;
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn {
+    margin-bottom: 10px;
+}
+
+.navbar-nav {
+    height: 30px;
+}
+
+.bi {
+    margin-right: 20px; 
+}
+
+.navbar-nav {
+    color: white;
+}
+
+.inner-container {
+    margin: 0 auto;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.input-groups {
+    width: 100%;
+    text-align: center;
+    padding: 40px;
+}
+
+.input-group {
+    margin: 0 auto;
+    max-width: 400px;
+    padding: 10px;
+}
+
+.form-control {
+    width: auto;
+}
+
+.card {
+    margin: 5px;
+    display: inline-block;
+    width: auto;
+    height: auto;
+}
