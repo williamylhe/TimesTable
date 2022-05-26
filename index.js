@@ -52,6 +52,12 @@ $("#answer").on('input', function() {
     let input = document.getElementById("answer").value;
     let num = parseInt(input);
 
+    if (input.length >= 3) {
+        score--;
+        document.getElementById("answer").value = "";
+        genNums();
+    }
+
     if (num === num1 * num2) {
         score++;
         document.getElementById("answer").value = "";
