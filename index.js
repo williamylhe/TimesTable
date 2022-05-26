@@ -41,6 +41,7 @@ const play = function() {
         results_card.style.display = "block";
         
         document.getElementById("answer").disabled = true;
+        document.getElementById("answer").value = "";
         document.getElementById("restart").hidden = false;
         
         document.getElementById("score").innerHTML = "Score: " + score;
