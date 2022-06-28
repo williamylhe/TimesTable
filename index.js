@@ -1,5 +1,5 @@
 let timer, num1, num2;
-let score = 0;
+let score = 0, i = 0;
 
 window.onload = function() {
     let results_card = document.getElementById("results");
@@ -24,6 +24,28 @@ const genNums = function() {
     $("#num2").html(`${num2}`);
 };
 
+let endGame = function() {
+    let results_card = document.getElementById("results");
+    let highscore = localStorage.getItem("highscore");
+    
+    if (highscore === null) {
+        localStorage.setItem("highscore", score);
+        highscore = score;
+    }
+    else {
+        if (score > highscore) localStorage.setItem("highscore", score);
+    }
+
+    results_card.style.display = "block";
+    
+    document.getElementById("answer").disabled = true;
+    document.getElementById("answer").value = "";
+    document.getElementById("restart").hidden = false;
+    
+    document.getElementById("score").innerHTML = `Score: ${score}</br>
+                                    High Score: ${highscore}`;
+}
+
 const play = function() {
     document.getElementById("results").style.display = "none";
     document.getElementById("restart").hidden = true;
@@ -36,16 +58,21 @@ const play = function() {
     document.getElementById("answer").focus();
     genNums();
 
-    timer = setTimeout(function() {
-        let results_card = document.getElementById("results");
-        results_card.style.display = "block";
-        
-        document.getElementById("answer").disabled = true;
-        document.getElementById("answer").value = "";
-        document.getElementById("restart").hidden = false;
-        
-        document.getElementById("score").innerHTML = "Score: " + score;
-    }, 10000);
+    let countDown = setInterval(function() {
+        i += 10;
+        let secondsLeft = (100 - i) / 10;
+        if (secondsLeft <= 3) {
+            $("#progressBar").attr("class", "progress-bar bg-danger");
+        }
+        if (i <= 100) {
+            $(".progress-bar").css("width", i + '%');
+            document.getElementById("progressBar").innerHTML = `${secondsLeft}`;
+        }
+        else {
+            endGame();
+            clearInterval(countDown);
+        }
+    }, 1000);
 };
 
 $("#answer").on('input', function() {
@@ -63,6 +90,7 @@ $("#answer").on('input', function() {
         document.getElementById("answer").value = "";
         genNums();
     }
+
 });
 
 function genRandomInt(min, max) {
