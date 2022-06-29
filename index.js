@@ -8,9 +8,9 @@ window.onload = function() {
     $("#instructionModal").modal("show");
 
     $("#instructionModal").on("hidden.bs.modal", function() {
-        play();
-    })
-};
+        overlay();
+    });
+}
 
 const showInfo = function() {
     $("#infoModal").modal("show");
@@ -22,7 +22,7 @@ const genNums = function() {
 
     $("#num1").html(`${num1}`);
     $("#num2").html(`${num2}`);
-};
+}
 
 let endGame = function() {
     let results_card = document.getElementById("results");
@@ -46,7 +46,27 @@ let endGame = function() {
                                     High Score: ${highscore}`;
 }
 
+const overlay = function() {
+    $("#progressBar").attr("class", "progress-bar");
+    $("#progressBar").attr("style", "width: 0%");
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("countdown").innerHTML = 3;
+
+    let countDown = setInterval(function() {
+        let secondsLeft = document.getElementById("countdown").innerHTML;
+        let numSeconds = parseInt(secondsLeft);
+
+        if (numSeconds === 1) {
+            clearInterval(countDown);
+            document.getElementById("overlay").style.display = "none";
+            play();
+        }
+        else document.getElementById("countdown").innerHTML = numSeconds - 1;
+    }, 1000);
+}
+
 const play = function() {
+    i = 0;
     document.getElementById("results").style.display = "none";
     document.getElementById("restart").hidden = true;
     
@@ -58,9 +78,9 @@ const play = function() {
     document.getElementById("answer").focus();
     genNums();
 
-    let countDown = setInterval(function() {
+    let gameTimer = setInterval(function() {
         i += 10;
-        let secondsLeft = (100 - i) / 10;
+        let secondsLeft = (100 - i + 10) / 10;
         if (secondsLeft <= 3) {
             $("#progressBar").attr("class", "progress-bar bg-danger");
         }
@@ -69,13 +89,18 @@ const play = function() {
             document.getElementById("progressBar").innerHTML = `${secondsLeft}`;
         }
         else {
+            clearInterval(gameTimer);
             endGame();
-            clearInterval(countDown);
         }
     }, 1000);
-};
+}
 
-$("#answer").on('input', function() {
+// let addToInput = function() {
+//     let input = document.getElementById("answer").value;
+//     document.getElementById("answer").value = input + 1;
+// }
+
+$("#answer").on('input change', function() {
     let input = document.getElementById("answer").value;
     let num = parseInt(input);
 
@@ -90,7 +115,6 @@ $("#answer").on('input', function() {
         document.getElementById("answer").value = "";
         genNums();
     }
-
 });
 
 function genRandomInt(min, max) {

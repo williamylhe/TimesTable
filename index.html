@@ -36,7 +36,10 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        Upon closing this modal, you will have 10 seconds to answer as many
+                        Upon closing this modal, a 3 second countdown timer will start.
+                    </p>
+                    <p>
+                        When the timer runs out, you will have 10 seconds to answer as many
                         single digit multiplication questions as you can.
                     </p>
                     <p>
@@ -83,7 +86,11 @@
         </div>
     </div>
 
-    <div class="progress">
+    <div id="overlay">
+        <div id="countdown"></div>
+    </div>
+
+    <div class="progress" style="height: 20px">
         <div class="progress-bar" id="progressBar" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
 
@@ -102,15 +109,19 @@
     </div>
 
     <div class="input-group">
-        <input type="tel" id="answer" class="form-control" autofocus>
+        <input type="text" id="answer" class="form-control" autofocus>
     </div>
+
+    <!-- <div class="container">
+        <button class="btn btn-primary" onclick="addToInput()">1</button>
+    </div> -->
 
     <div class="container" id="results">
         <div class="card">
             <div class="card-body">
                 <h3 id="score"></h3>
             </div>
-            <button class="btn btn-primary" id="restart" onclick="play()">Restart</button>
+            <button class="btn btn-primary" id="restart" onclick="overlay()">Restart</button>
         </div>
     </div>
 
